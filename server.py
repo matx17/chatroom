@@ -51,7 +51,7 @@ def  handler(conn, addr):
             if len(message) >200:
                 conn.send("ERROR - message is valid \n")
             else:
-                mail_data =name + msg + ""    
+                mail_data =name + ":" + msg   
             broadcast(mail_data,conn)
 while True:
       s.listen(100)
