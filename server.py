@@ -39,6 +39,7 @@ def  handler(conn, addr):
 
     while 1:
         message= conn.recv(1024)
+        msg = message.strip("MSG ")
         if msg == 'quits':
             conn.close()
             del clients[conn]
