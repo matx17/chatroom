@@ -28,6 +28,8 @@ def acpt_clients():
 def  handler(conn, addr):
     data = conn.recv(1024)
     name = data.strip("NICK ")
+    if len(name)<=10:
+       conn.send("Ok \n")
     else:
        conn.send("ERROR - Length of the nickname is greater than 10 \n")
     message = "%s connect to chat \n"%name
