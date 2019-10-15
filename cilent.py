@@ -2,10 +2,9 @@ import socket,select,sys
 from sys import argv
 s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 script,host,port,nickname = argv
-list = int(port)
 Host=""
-port=list
-s.connect(("", port))
+port=6000
+s.connect(("", 6000))
 print('connect to server')
 NICK = nickname
 s.send(NICK)
