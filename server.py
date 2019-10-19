@@ -49,7 +49,7 @@ def  handler(conn, addr):
 
         else :
             if len(message) >200:
-                conn.send("ERROR - message is valid \n")
+                conn.send("ERROR - message is not valid \n")
             else:
                 mail_data =name + ":" + msg   
             broadcast(mail_data,conn)
