@@ -13,8 +13,8 @@ s.send(('NICK '+nick).encode('utf-8'))
 while 1:
     Socket_list=[sys.stdin,s]
     read_list,write_list,error_list=select.select(Socket_list,[],[])
-    for k in read_list:
-        if k ==s:
+    for conn in read_list:
+        if conn ==s:
             message =s.recv(1024)
             print(message)
             if not message :
