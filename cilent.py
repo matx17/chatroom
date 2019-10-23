@@ -22,7 +22,7 @@ while 1:
                 exit()
         else:
             message = sys.stdin.readline()
-            s.send(message.encode('utf-8'))
+            s.send(('MSG '+message).encode('utf-8'))
             sys.stdout.write("me:")
             sys.stdout.write(message)
             sys.stdout.flush()
