@@ -8,15 +8,16 @@ port = int(args[1])
 nick = str(sys.argv[2])
 s.connect((host, port))
 print('connect to server')
-
+temp = s.recv(1024).decode('utf-8')
+print(temp)
 s.send(('NICK '+nick).encode('utf-8'))
 while 1:
     Socket_list=[sys.stdin,s]
     read_list,write_list,error_list=select.select(Socket_list,[],[])
     for conn in read_list:
         if conn ==s:
-            message =s.recv(1024)
-            if re.search(r'Error',message)
+            message =s.recv(1024).decode('utf-8')
+            if re.search(r'Error',message):
                print(message)
             else:
                message = message[4:]
