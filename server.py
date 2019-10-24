@@ -69,7 +69,6 @@ def acpt_clients():
                                conn.send("Error-> message should not exceed 250 char")
                             elif find:
                                msg = 'MSG '+str(clients_dict[conn])+':'+message[4:]
-                               print("%s" %msg)
                                broadcast(msg,conn)
                             else:
                                conn.send("Error Actual command is MSG <msg>")
