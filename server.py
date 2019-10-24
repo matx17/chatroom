@@ -34,7 +34,7 @@ def acpt_clients():
             if conn == s:
                newconn,addr=s.accept()
                print("connected with", addr)
-               newconn.send("HELLO 1 \n".encode('utf-8'))
+               newconn.send("HELLO 1".encode('utf-8'))
                Socket_list.append(newconn)
                cli_socket_temp.append(newconn)
             elif conn in cli_socket_temp:
