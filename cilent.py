@@ -11,6 +11,11 @@ print('connect to server')
 temp = s.recv(1024).decode('utf-8')
 print(temp)
 s.send(('NICK '+nick).encode('utf-8'))
+validate = s.recv(1024).decode('utf-8'))
+if re.search(r'Error',validate)
+   print(validate)
+   exit()
+print(validate)
 while 1:
     Socket_list=[sys.stdin,s]
     read_list,write_list,error_list=select.select(Socket_list,[],[])
