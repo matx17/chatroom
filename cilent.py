@@ -16,10 +16,11 @@ while 1:
     for conn in read_list:
         if conn ==s:
             message =s.recv(1024)
-            print(message)
-            if not message :
-                print("disconnect")
-                exit()
+            if re.search(r'Error',message)
+               print(message)
+            else:
+               message = message[4:]
+               print(message)
         else:
             message = sys.stdin.readline()
             s.send(('MSG '+message).encode('utf-8'))
