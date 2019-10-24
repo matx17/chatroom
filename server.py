@@ -6,10 +6,10 @@ args= str(sys.argv[1]).split(':')
 host = str(args[0])
 port = int(args[1])
 clients_dict={}
-cli_socket=[]
-cli_socket.append(s)
+Socket_list=[]
+Socket_list.append(s)
 cli_socket_temp=[]
-cli_socker_perm=[]
+cli_socket_perm=[]
 s.bind((host,port))
 s.listen(100)
 
@@ -22,11 +22,12 @@ def broadcast(message, cli_conn):
                 conn.close()
                 cli_socket_perm.remove(conn)
                 del clients_dict[conn]
-                cli_socket.remove(conn)
+                Socket_list.remove(conn)
                 
            
 
 def acpt_clients():
+    print("server is running")
     while 1:
         read_list,write_list,error_list=select.select(Socket_list,[],[])
         for conn in read_list:
@@ -34,7 +35,7 @@ def acpt_clients():
                newconn,addr=s.accept()
                print("connected with", addr)
                newconn.send("HELLO 1 \n".encode('utf-8'))
-               cli_socket.append(newconn)
+               Socket_list.append(newconn)
                cli_socket_temp.append(newconn)
             elif conn in cli_socket_temp:
                 try:
@@ -55,7 +56,7 @@ def acpt_clients():
                          conn.send("Error-> Actual command protocal is NICK <nick>")
                    else:
                       conn.close()
-                      cli_socket.remove(conn) 
+                      Socket_list.remove(conn) 
                       cli_socket_temp.remove(conn)
                 except:
                    continue
@@ -68,17 +69,18 @@ def acpt_clients():
                                conn.send("Error-> message should not exceed 250 char")
                             elif find:
                                msg = 'MSG '+str(clients_dict[conn])+':'+message[4:]
+                               print("%s" %msg)
                                broadcast(msg,conn)
                             else:
                                conn.send("Error Actual command is MSG <msg>")
                    else: 
                        conn.close()
-                       cli_socket.remove(conn)
+                       Socket_list.remove(conn)
                        cli_socket_perm.remove(conn)
                        del clients_dict[conn]
                 except:
                     continue
 
-   s.close()
+    s.close()
 if __name__ == "__main__":
     acpt_clients()
