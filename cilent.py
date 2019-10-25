@@ -2,6 +2,7 @@ import socket,select,sys,re
 s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 if (len(sys.argv)!=3):
    print("How to use in terminal-> python chatclient.py serveripadd:port nick")
+   exit(1)
 args = str(sys.argv[1]).split(':')
 host = str(args[0])
 port = int(args[1])

@@ -2,6 +2,7 @@ import socket,re,sys,select
 s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 if (len(sys.argv)!=2):
    print("how to use for terminals-> python chatserver.py server_ip_add:port")
+   exit()
 args= str(sys.argv[1]).split(':')
 host = str(args[0])
 port = int(args[1])
@@ -34,7 +35,7 @@ def acpt_clients():
             if conn == s:
                newconn,addr=s.accept()
                print("connected with", addr)
-               newconn.send("HELLO 1".encode('utf-8'))
+               newconn.send("Hello 1".encode('utf-8'))
                Socket_list.append(newconn)
                cli_socket_temp.append(newconn)
             elif conn in cli_socket_temp:
@@ -45,8 +46,8 @@ def acpt_clients():
                       name = str(find.group(1))
                       if len(name)>12:
                 	 conn.send("Error-> your nickname shouls be less than 12 characters")
-            	      elif re.search(r'#',name) or re.search(r'\$',name) or re.search(r'!',name) or re.search(r'@',name) or re.search(r'\*',name):
-                         conn.send("Error-> Don't use special characters i your nickname")
+            	      elif re.search(r'#',name) or re.search(r'\$',name) or re.search(r'!',name) or re.search(r'@',name) or re.search(r'\*',name) or re.search(r'^',name) or re.search(r'%',name) or re.search(r'&',name):
+                         conn.send("Error-> Don't use special characters in your nickname")
              	      elif find:
                          conn.send("%s connect to chat \n"%name)
                          cli_socket_perm.append(conn)
@@ -71,7 +72,7 @@ def acpt_clients():
                                msg = 'MSG '+str(clients_dict[conn])+':'+message[4:]
                                broadcast(msg,conn)
                             else:
-                               conn.send("Error Actual command is MSG <msg>")
+                               conn.send("Error-> Actual command protocal is MSG <msg>")
                    else: 
                        conn.close()
                        Socket_list.remove(conn)
