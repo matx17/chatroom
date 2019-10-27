@@ -42,19 +42,22 @@ def acpt_clients():
                 try:
           	   nick = conn.recv(1024).decode('utf-8')
           	   if nick:
-                      find = re.search(r'NICK\s(\S*)',nick)
-                      name = str(find.group(1))
+                      find = re.match('^NICK\s(\s*)',nick)
+                      name = nick.strip("NICK ")
                       if len(name)>12:
                 	 conn.send("Error-> your nickname shouls be less than 12 characters")
-            	      elif re.search(r'#',name) or re.search(r'\$',name) or re.search(r'!',name) or re.search(r'@',name) or re.search(r'\*',name) or re.search(r'^',name) or re.search(r'%',name) or re.search(r'&',name):
+                      elif((re.search('\#',name) != None) or (re.search('\$',name) != None) or (re.search('\!',name) != None)  or (re.search('\@',name) != None) or (re.search('\*',name) != None) or (re.search('\^',name) != None) or (re.search('\%',name) != None) or (re.search('\&',name) != None)):
                          conn.send("Error-> Don't use special characters in your nickname")
-             	      elif find:
+                      elif (find != None):
                          conn.send("%s connect to chat \n"%name)
                          cli_socket_perm.append(conn)
                          clients_dict[conn]=name
                          cli_socket_temp.remove(conn)
+            	      
+                     
+             	      
                       else: 
-                         conn.send("Error-> Actual command protocal is NICK <nick>")
+                         conn.send("Error-> malformed command,Actual command is NICK <nick>")
                    else:
                       conn.close()
                       Socket_list.remove(conn) 
@@ -72,7 +75,7 @@ def acpt_clients():
                                msg = 'MSG '+str(clients_dict[conn])+':'+message[4:]
                                broadcast(msg,conn)
                             else:
-                               conn.send("Error-> Actual command protocal is MSG <msg>")
+                               conn.send("Error-> malformed command, Actual command protocal is MSG <msg>")
                    else: 
                        conn.close()
                        Socket_list.remove(conn)

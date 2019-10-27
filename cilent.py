@@ -11,7 +11,7 @@ s.connect((host, port))
 print('connect to server')
 temp = s.recv(1024).decode('utf-8')
 print(temp)
-s.send(('NICK '+nick).encode('utf-8'))
+s.send(("NICK "+nick).encode('utf-8'))
 validate = s.recv(1024).decode('utf-8')
 if re.search(r'Error',validate):
    print(validate)
