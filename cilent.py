@@ -13,17 +13,28 @@ temp = s.recv(1024).decode('utf-8')
 print(temp)
 s.send(("NICK "+nick).encode('utf-8'))
 validate = s.recv(1024).decode('utf-8')
-if re.search(r'Error',validate):
+#if re.search(r'ERROR',validate):
+ #  print(validate)
+ #  exit()
+#print(validate)
+if re.search(r'ERROR',validate):
+    print(validate)
+    exit()
+else:
+   re.search(r'OK',validate)
    print(validate)
-   exit()
-print(validate)
+valid = s.recv(1024).encode('utf-8')
+if re.search(r'ERROR',valid):
+    print(valid)
+    exit()
+print(valid)
 while 1:
     Socket_list=[sys.stdin,s]
     read_list,write_list,error_list=select.select(Socket_list,[],[])
     for conn in read_list:
         if conn ==s:
             message =s.recv(1024).decode('utf-8')
-            if re.search(r'Error',message):
+            if re.search(r'ERROR',message):
                print(message)
             else:
                message = message[4:]
