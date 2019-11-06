@@ -43,6 +43,7 @@ def acpt_clients():
           	   nick = conn.recv(1024).decode('utf-8')
           	   if nick:
                       find = re.match('^NICK\s(\s*)',nick)
+                      found = re.match('^MSG\s(\s*)',nick)
                       name = nick.lstrip("NICK")
                       if len(name)>12:
                 	 conn.send("Error-> your nickname shouls be less than 12 characters")
@@ -53,6 +54,8 @@ def acpt_clients():
                          cli_socket_perm.append(conn)
                          clients_dict[conn]=name
                          cli_socket_temp.remove(conn)
+                      elif (found != None):
+                         conn.send("Error-> nickname not set")
             	      else: 
                          conn.send("Error-> malformed command,Actual command is NICK <nick>")
                    else:
