@@ -46,18 +46,19 @@ def acpt_clients():
                       found = re.match('^MSG\s(\s*)',nick)
                       name = nick.lstrip("NICK")
                       if len(name)>12:
-                	 conn.send("Error-> your nickname shouls be less than 12 characters")
-                      elif((re.search('\#',name) != None) or (re.search('\$',name) != None) or (re.search('\!',name) != None)  or (re.search('\@',name) != None) or (re.search('\*',name) != None) or (re.search('\^',name) != None) or (re.search('\%',name) != None) or (re.search('\&',name) != None)):
-                         conn.send("Error-> Don't use special characters in your nickname")
+                	 conn.send("ERROR-> your nickname shouls be less than 12 characters")
+                      elif((re.search('\#',name) != None) or (re.search('\$',name) != None) or (re.search('\!',name) != None)  or (re.search('\@',name) != None) or (re.search('\*',name) != None) or (re.search('\^',name) != None) or (re.search('\&',name) != None) or (re.search('\%',name) != None)):
+                         conn.send("ERROR-> Don't use special characters in your nickname")
                       elif (find != None):
+                         conn.send("OK")
                          conn.send("%s connect to chat \n"%name)
                          cli_socket_perm.append(conn)
                          clients_dict[conn]=name
                          cli_socket_temp.remove(conn)
                       elif (found != None):
-                         conn.send("Error-> nickname not set")
+                         conn.send("ERROR no nick set.")
             	      else: 
-                         conn.send("Error-> malformed command,Actual command is NICK <nick>")
+                         conn.send("ERROR malformed command")
                    else:
                       conn.close()
                       Socket_list.remove(conn) 
@@ -70,12 +71,12 @@ def acpt_clients():
                    if message:
                             find = re.search(r'MSG\s',message)
                             if len(message)>250:
-                               conn.send("Error-> message should not exceed 250 char")
+                               conn.send("ERROR-> message should not exceed 250 char")
                             elif find:
                                msg = 'MSG '+str(clients_dict[conn])+':'+message[4:]
                                broadcast(msg,conn)
                             else:
-                               conn.send("Error-> malformed command, Actual command protocal is MSG <msg>")
+                               conn.send("ERROR malformed command")
                    else: 
                        conn.close()
                        Socket_list.remove(conn)
