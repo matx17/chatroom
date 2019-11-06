@@ -13,10 +13,6 @@ temp = s.recv(1024).decode('utf-8')
 print(temp)
 s.send(("NICK "+nick).encode('utf-8'))
 validate = s.recv(1024).decode('utf-8')
-#if re.search(r'ERROR',validate):
- #  print(validate)
- #  exit()
-#print(validate)
 if re.search(r'ERROR',validate):
     print(validate)
     exit()
