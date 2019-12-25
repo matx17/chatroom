@@ -34,7 +34,6 @@ while 1:
             if re.search(r'ERROR',message):
                print(message)
             else:
-               #message = message[4:]
                print(message)
         else:
             message = sys.stdin.readline()
@@ -43,9 +42,6 @@ while 1:
                 continue
             else:
                 s.sendall(message.encode('utf-8'))
-#s.send(('MSG '+message).encode('utf-8'))
-            #sys.stdout.write("me:")
-            #sys.stdout.write(message)
-            #sys.stdout.flush()
+
 
 s.close()
