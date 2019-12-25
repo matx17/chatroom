@@ -1,7 +1,8 @@
+#!/usr/bin/python
 import socket,re,sys,select
 s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 if (len(sys.argv)!=2):
-   print("how to use for terminals-> python chatserver.py server_ip_add:port")
+   print("how to use for terminals-> ./chatserver server_ip_add:port")
    exit()
 args= str(sys.argv[1]).split(':')
 host = str(args[0])
@@ -16,14 +17,15 @@ s.listen(100)
 
 def broadcast(message, cli_conn):
     for conn in cli_socket_perm:
-         if conn != cli_conn :
+         if conn != s :
             try:
 	        conn.send(message.encode('utf-8'))
-            except:
+            except keyboardInterrupt:
                 conn.close()
                 cli_socket_perm.remove(conn)
                 del clients_dict[conn]
                 Socket_list.remove(conn)
+                
                 
            
 
@@ -73,7 +75,7 @@ def acpt_clients():
                             if len(message)>250:
                                conn.send("ERROR-> message should not exceed 250 char")
                             elif find:
-                               msg = 'MSG '+str(clients_dict[conn])+':'+message[4:]
+                               msg = 'MSG'+str(clients_dict[conn])+' ' +message[4:]
                                broadcast(msg,conn)
                             else:
                                conn.send("ERROR malformed command")

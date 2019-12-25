@@ -1,7 +1,8 @@
+#!/usr/bin/python
 import socket,select,sys,re
 s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 if (len(sys.argv)!=3):
-   print("How to use in terminal-> python chatclient.py serveripadd:port nick")
+   print("How to use in terminal-> ./chatclient server_ip_add:port nick")
    exit(1)
 args = str(sys.argv[1]).split(':')
 host = str(args[0])
@@ -33,13 +34,18 @@ while 1:
             if re.search(r'ERROR',message):
                print(message)
             else:
-               message = message[4:]
+               #message = message[4:]
                print(message)
         else:
             message = sys.stdin.readline()
-            s.send(('MSG '+message).encode('utf-8'))
-            sys.stdout.write("me:")
-            sys.stdout.write(message)
-            sys.stdout.flush()
+            message = 'MSG '+ message
+            if message == '\n':
+                continue
+            else:
+                s.sendall(message.encode('utf-8'))
+#s.send(('MSG '+message).encode('utf-8'))
+            #sys.stdout.write("me:")
+            #sys.stdout.write(message)
+            #sys.stdout.flush()
 
 s.close()
