@@ -63,6 +63,7 @@ def acpt_clients():
                          conn.send("ERROR malformed command")
                    else:
                       conn.close()
+                      print("disconnect with ",addr)
                       Socket_list.remove(conn) 
                       cli_socket_temp.remove(conn)
                 except:
@@ -81,6 +82,7 @@ def acpt_clients():
                                conn.send("ERROR malformed command")
                    else: 
                        conn.close()
+                       print("disconnect with",addr)
                        Socket_list.remove(conn)
                        cli_socket_perm.remove(conn)
                        del clients_dict[conn]
